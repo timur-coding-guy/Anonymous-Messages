@@ -27,15 +27,14 @@ Telegram bot for sending anonymous messages between users. Features multi-langua
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
 # Clone the repository
-git clone <repository-url>
-cd anon-messages
-
+git clone https://github.com/timur-coding-guy/Anonymous-Messages/
+cd Anonymous-Messages
 # Install dependencies
 uv sync
 
 # Copy environment file and configure
 cp .env.example .env
-# Edit .env with your TELEGRAM_BOT_TOKEN, TURSO_DATABASE_URL, and TURSO_AUTH_TOKEN
+# Edit .env with your TELEGRAM_BOT_TOKEN, TURSO_DATABASE_URL, TURSO_AUTH_TOKEN, GITHUB_PAGES_URL, and HASH_SALT
 ```
 
 ### Windows (PowerShell)
@@ -45,15 +44,15 @@ cp .env.example .env
 powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
 
 # Clone the repository
-git clone <repository-url>
-cd anon-messages
+git clone https://github.com/timur-coding-guy/Anonymous-Messages/
+cd Anonymous-Messages
 
 # Install dependencies
 uv sync
 
 # Copy environment file and configure
 copy .env.example .env
-# Edit .env with your TELEGRAM_BOT_TOKEN, TURSO_DATABASE_URL, and TURSO_AUTH_TOKEN
+# Edit .env with your TELEGRAM_BOT_TOKEN, TURSO_DATABASE_URL, TURSO_AUTH_TOKEN, GITHUB_PAGES_URL, and HASH_SALT
 ```
 
 ## Configuration
@@ -65,6 +64,7 @@ TELEGRAM_BOT_TOKEN=your_bot_token
 TURSO_DATABASE_URL=libsql://your-database.turso.io
 TURSO_AUTH_TOKEN=your_auth_token
 GITHUB_PAGES_URL=https://yourusername.github.io/your-repo-name
+HASH_SALT=your_random_secret_salt_here
 ```
 
 ### Setting up Turso
@@ -74,13 +74,13 @@ GITHUB_PAGES_URL=https://yourusername.github.io/your-repo-name
 curl -sSfL https://get.tur.so/install.sh | bash
 
 # Create database
-turso db create anon-messages
+turso db create your-name-of-database-you-want
 
 # Get database URL
-turso db show anon-messages --http-url
+turso db show your-name-of-database --http-url
 
 # Create auth token
-turso db tokens create anon-messages
+turso db tokens create your-name-of-database
 ```
 
 ## Running the Bot
@@ -103,7 +103,7 @@ docker-compose up -d
 ## GitHub Pages Setup
 
 1. Create a GitHub repository
-2. Enable GitHub Pages in repository settings (use docs/ folder or gh-pages branch)
+2. Enable GitHub Pages in repository settings (use docs/ folder)
 3. Upload the `docs/` folder contents
 4. Add your GitHub Pages URL to `.env`:
    ```
@@ -123,6 +123,7 @@ anon-messages/
 ├── tests/
 │   └── __init__.py
 ├── docs/
+│   ├── index.html
 │   ├── terms.html       # Terms of Service
 │   └── privacy.html     # Privacy Policy
 ├── docker/
@@ -132,6 +133,10 @@ anon-messages/
 ├── .env.example
 ├── .gitignore
 ├── pyproject.toml
+├── .python-version
+├── LICENSE
+├── uv.lock
 └── README.md
+
 ```
 
