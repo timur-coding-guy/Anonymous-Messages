@@ -4,6 +4,10 @@ const translations = {
         nav_privacy: "Privacy Policy",
         nav_terms: "Terms of Service",
         nav_cookies: "Cookie Policy",
+        menu_open: "Open navigation menu",
+        menu_close: "Close navigation menu",
+        theme_to_dark: "Switch to dark theme",
+        theme_to_light: "Switch to light theme",
         footer_privacy: "Privacy",
         footer_terms: "Terms",
         footer_cookies: "Cookies",
@@ -16,7 +20,7 @@ const translations = {
         feature2_desc: "Messages pass through Telegram's servers directly. Your database never stores message content or metadata.",
         feature3_title: "Multi-language support",
         feature3_desc: "Available in English, Russian, and Ukrainian.",
-        cookie_text: "This site selects a language from your browser settings without accessing your location. Choose Accept to save your language between visits, or Reject to select it from your browser settings next time. ",
+        cookie_text: "This site selects a language from your browser settings without accessing your location. Choose Accept to save your language between visits, or Reject to select it from your browser settings next time. Your color theme is saved separately. ",
         cookie_learn: "Learn more",
         cookie_reject: "Reject",
         cookie_accept: "Accept",
@@ -26,7 +30,7 @@ const translations = {
         privacy_p1: "We collect only the information necessary to operate the service:",
         privacy_li1: "Hashed User ID: Your Telegram user ID is hashed using SHA-256 with an additional salt before storage",
         privacy_li2: "Language Preference: Your selected language (two-letter code: en, ru, ua)",
-        privacy_li16: "Browser Preferences: The website stores your selected language and storage choice in your browser after you accept",
+        privacy_li16: "Browser Preferences: Your language and consent choice are saved after you accept; your selected color theme is saved separately",
         privacy_h2: "2. Information We Do NOT Collect",
         privacy_important: "Important:",
         privacy_p2: "We do NOT store or log:",
@@ -91,7 +95,7 @@ const translations = {
         cookie_title: "Cookie and Browser Storage Policy",
         cookie_updated: "Last updated: October 27, 2026",
         cookie_h1: "1. Browser Storage",
-        cookie_p1: "This website does not use cookies or access your location. When no language preference is saved, it selects a language locally from your browser settings. Your language choice is saved in local storage only after you accept.",
+        cookie_p1: "This website does not use cookies or access your location. When no language preference is saved, it selects a language locally from your browser settings. Your language choice is saved only after you accept; your color theme is saved in local storage when you change it.",
         cookie_h2: "2. Browser Storage We Use",
         cookie_p2: "The following items are stored in your browser's local storage:",
         cookie_table_name: "Storage Item",
@@ -106,6 +110,10 @@ const translations = {
         cookie_row2_type: "Local storage",
         cookie_row2_purpose: "Stores your choice to accept or reject language storage",
         cookie_row2_duration: "Until cleared in your browser",
+        cookie_row3_name: "theme",
+        cookie_row3_type: "Local storage",
+        cookie_row3_purpose: "Stores your selected color theme",
+        cookie_row3_duration: "Until cleared in your browser",
         cookie_h3: "3. Third-Party Tracking",
         cookie_p3: "We do not use third-party storage, analytics, marketing, or tracking scripts on this website.",
         cookie_h4: "4. Your Choice",
@@ -113,7 +121,7 @@ const translations = {
         cookie_li1: "Accept: Your selected language is saved in local storage and restored on future visits",
         cookie_li2: "Reject: Your language is not saved; it is selected again from your browser settings on your next visit",
         cookie_h5: "5. Managing Browser Storage",
-        cookie_p5: "You can clear this website's local storage through your browser settings. This will remove your saved language and choice, and the banner will appear again on your next visit.",
+        cookie_p5: "You can clear this website's local storage through your browser settings. This will remove your saved language, color theme, and choice, and the banner will appear again on your next visit.",
         cookie_li3: "View the data stored by this website",
         cookie_li4: "Clear this website's stored data",
         cookie_h6: "6. Updates to This Policy",
@@ -124,6 +132,10 @@ const translations = {
         nav_privacy: "Политика конфиденциальности",
         nav_terms: "Условия использования",
         nav_cookies: "Политика использования cookie",
+        menu_open: "Открыть меню навигации",
+        menu_close: "Закрыть меню навигации",
+        theme_to_dark: "Включить тёмную тему",
+        theme_to_light: "Включить светлую тему",
         footer_privacy: "Конфиденциальность",
         footer_terms: "Условия",
         footer_cookies: "Файлы cookie",
@@ -136,7 +148,7 @@ const translations = {
         feature2_desc: "Сообщения проходят напрямую через серверы Telegram. Ваша база данных никогда не хранит содержимое сообщений или метаданные.",
         feature3_title: "Поддержка нескольких языков",
         feature3_desc: "Бот доступен на английском, русском и украинском языках.",
-        cookie_text: "Сайт выбирает язык по настройкам браузера, не определяя ваше местоположение. Нажмите «Принять», чтобы сохранять выбранный язык между посещениями, или «Отклонить», чтобы при следующем посещении язык снова определился по настройкам браузера. ",
+        cookie_text: "Сайт выбирает язык по настройкам браузера, не определяя ваше местоположение. Нажмите «Принять», чтобы сохранять выбранный язык между посещениями, или «Отклонить», чтобы при следующем посещении язык снова определился по настройкам браузера. Выбранная тема сохраняется отдельно. ",
         cookie_learn: "Узнать больше",
         cookie_reject: "Отклонить",
         cookie_accept: "Принять",
@@ -146,7 +158,7 @@ const translations = {
         privacy_p1: "Мы собираем минимальную информацию, необходимую для работы сервиса:",
         privacy_li1: "Хешированный ID пользователя: ваш ID в Telegram хешируется с помощью SHA-256 и дополнительной соли перед сохранением",
         privacy_li2: "Выбранный язык: язык интерфейса (двухбуквенный код: en, ru или ua)",
-        privacy_li16: "Настройки браузера: после вашего согласия сайт сохраняет выбранный язык и ваше решение в локальном хранилище браузера",
+        privacy_li16: "Настройки браузера: язык и решение о его сохранении записываются после согласия; выбранная тема сохраняется отдельно",
         privacy_h2: "2. Информация, которую мы не собираем",
         privacy_important: "Важно:",
         privacy_p2: "Мы не храним и не записываем:",
@@ -211,7 +223,7 @@ const translations = {
         cookie_title: "Политика использования cookie",
         cookie_updated: "Последнее обновление: 27 октября 2026",
         cookie_h1: "1. Хранение данных в браузере",
-        cookie_p1: "Сайт не использует файлы cookie и не определяет ваше местоположение. Если выбранный язык не сохранён, сайт локально выбирает его по настройкам браузера. Выбранный язык сохраняется в локальном хранилище только после вашего согласия.",
+        cookie_p1: "Сайт не использует файлы cookie и не определяет ваше местоположение. Если выбранный язык не сохранён, сайт локально выбирает его по настройкам браузера. Язык сохраняется только после вашего согласия, а выбранная тема — в локальном хранилище при её смене.",
         cookie_h2: "2. Данные в локальном хранилище",
         cookie_p2: "В локальном хранилище браузера сохраняются следующие данные:",
         cookie_table_name: "Название",
@@ -226,6 +238,10 @@ const translations = {
         cookie_row2_type: "Локальное хранилище",
         cookie_row2_purpose: "Сохраняет ваш выбор — разрешить или запретить сохранение языка",
         cookie_row2_duration: "До очистки данных браузера",
+        cookie_row3_name: "theme",
+        cookie_row3_type: "Локальное хранилище",
+        cookie_row3_purpose: "Сохраняет выбранную цветовую тему",
+        cookie_row3_duration: "До очистки данных браузера",
         cookie_h3: "3. Стороннее отслеживание",
         cookie_p3: "Сайт не использует сторонние хранилища, аналитику, маркетинговые или отслеживающие скрипты.",
         cookie_h4: "4. Ваш выбор",
@@ -233,7 +249,7 @@ const translations = {
         cookie_li1: "Принять: выбранный язык сохранится в локальном хранилище и восстановится при следующем посещении",
         cookie_li2: "Отклонить: язык не сохраняется; при следующем посещении он снова будет выбран по настройкам браузера",
         cookie_h5: "5. Управление данными браузера",
-        cookie_p5: "Вы можете очистить локальное хранилище сайта в настройках браузера. Это удалит сохранённый язык и ваш выбор, а при следующем посещении баннер появится снова.",
+        cookie_p5: "Вы можете очистить локальное хранилище сайта в настройках браузера. Это удалит сохранённый язык, тему и ваш выбор, а при следующем посещении баннер появится снова.",
         cookie_li3: "Просмотреть данные, сохранённые сайтом",
         cookie_li4: "Очистить данные, сохранённые этим сайтом",
         cookie_h6: "6. Обновления этой политики",
@@ -244,6 +260,10 @@ const translations = {
         nav_privacy: "Політика конфіденційності",
         nav_terms: "Умови використання",
         nav_cookies: "Політика використання файлів cookie",
+        menu_open: "Відкрити меню навігації",
+        menu_close: "Закрити меню навігації",
+        theme_to_dark: "Увімкнути темну тему",
+        theme_to_light: "Увімкнути світлу тему",
         footer_privacy: "Конфіденційність",
         footer_terms: "Умови",
         footer_cookies: "Файли cookie",
@@ -256,7 +276,7 @@ const translations = {
         feature2_desc: "Повідомлення проходять напряму через сервери Telegram. Ваша база даних ніколи не зберігає вміст повідомлень або метадані.",
         feature3_title: "Підтримка кількох мов",
         feature3_desc: "Бот доступний англійською, російською та українською мовами.",
-        cookie_text: "Сайт вибирає мову за налаштуваннями браузера, не визначаючи ваше місцезнаходження. Натисніть «Прийняти», щоб зберігати вибрану мову між відвідуваннями, або «Відхилити», щоб наступного разу мова знову визначалася за налаштуваннями браузера. ",
+        cookie_text: "Сайт вибирає мову за налаштуваннями браузера, не визначаючи ваше місцезнаходження. Натисніть «Прийняти», щоб зберігати вибрану мову між відвідуваннями, або «Відхилити», щоб наступного разу мова знову визначалася за налаштуваннями браузера. Вибрана тема зберігається окремо. ",
         cookie_learn: "Дізнатися більше",
         cookie_reject: "Відхилити",
         cookie_accept: "Прийняти",
@@ -266,7 +286,7 @@ const translations = {
         privacy_p1: "Ми збираємо мінімальну інформацію, необхідну для роботи сервісу:",
         privacy_li1: "Хешований ID користувача: ваш ID у Telegram хешується за допомогою SHA-256 із додатковою сіллю перед збереженням",
         privacy_li2: "Вибрана мова: мова інтерфейсу (двосимвольний код: en, ru або ua)",
-        privacy_li16: "Налаштування браузера: після вашої згоди сайт зберігає вибрану мову та ваш вибір у локальному сховищі браузера",
+        privacy_li16: "Налаштування браузера: мова та згода на її збереження записуються після підтвердження; вибрана тема зберігається окремо",
         privacy_h2: "2. Інформація, яку ми не збираємо",
         privacy_important: "Важливо:",
         privacy_p2: "Ми не зберігаємо й не записуємо:",
@@ -331,7 +351,7 @@ const translations = {
         cookie_title: "Політика використання файлів cookie",
         cookie_updated: "Останнє оновлення: 27 жовтня 2026",
         cookie_h1: "1. Зберігання даних у браузері",
-        cookie_p1: "Сайт не використовує файли cookie та не визначає ваше місцезнаходження. Якщо вибрану мову не збережено, сайт локально вибирає її за налаштуваннями браузера. Вибрана мова зберігається в локальному сховищі лише після вашої згоди.",
+        cookie_p1: "Сайт не використовує файли cookie та не визначає ваше місцезнаходження. Якщо вибрану мову не збережено, сайт локально вибирає її за налаштуваннями браузера. Мова зберігається лише після вашої згоди, а вибрана тема — у локальному сховищі після її зміни.",
         cookie_h2: "2. Дані в локальному сховищі",
         cookie_p2: "У локальному сховищі браузера зберігаються такі дані:",
         cookie_table_name: "Назва",
@@ -346,6 +366,10 @@ const translations = {
         cookie_row2_type: "Локальне сховище",
         cookie_row2_purpose: "Зберігає ваш вибір — дозволити чи заборонити збереження мови",
         cookie_row2_duration: "До очищення даних браузера",
+        cookie_row3_name: "theme",
+        cookie_row3_type: "Локальне сховище",
+        cookie_row3_purpose: "Зберігає вибрану кольорову тему",
+        cookie_row3_duration: "До очищення даних браузера",
         cookie_h3: "3. Стороннє відстеження",
         cookie_p3: "Сайт не використовує сторонні сховища, аналітику, маркетингові або відстежувальні скрипти.",
         cookie_h4: "4. Ваш вибір",
@@ -353,7 +377,7 @@ const translations = {
         cookie_li1: "Прийняти: вибрана мова збережеться в локальному сховищі та відновиться під час наступного відвідування",
         cookie_li2: "Відхилити: мова не зберігатиметься; під час наступного відвідування її знову буде вибрано за налаштуваннями браузера",
         cookie_h5: "5. Керування даними браузера",
-        cookie_p5: "Ви можете очистити локальне сховище сайту в налаштуваннях браузера. Це видалить збережену мову та ваш вибір, а під час наступного відвідування банер з'явиться знову.",
+        cookie_p5: "Ви можете очистити локальне сховище сайту в налаштуваннях браузера. Це видалить збережену мову, тему та ваш вибір, а під час наступного відвідування банер з'явиться знову.",
         cookie_li3: "Переглянути дані, збережені сайтом",
         cookie_li4: "Очистити дані, збережені цим сайтом",
         cookie_h6: "6. Оновлення цієї політики",
@@ -387,10 +411,107 @@ function setLanguage(lang) {
         }
     });
     updateCurrentLangDisplay(lang);
+    updateMobileMenuLabel(lang);
+    updateThemeToggleLabel(lang);
     updateCookieBannerSpace();
     if (localStorage.getItem('cookieConsent') === 'accepted') {
         localStorage.setItem('language', lang);
     }
+}
+
+function updateMobileMenuLabel(lang) {
+    const toggle = document.getElementById('menuToggle');
+    if (!toggle) return;
+
+    const label = toggle.getAttribute('aria-expanded') === 'true'
+        ? translations[lang].menu_close
+        : translations[lang].menu_open;
+    toggle.setAttribute('aria-label', label);
+}
+
+function closeMobileMenu(returnFocus = false) {
+    const toggle = document.getElementById('menuToggle');
+    const menu = document.getElementById('navLinks');
+    if (!toggle || !menu) return;
+
+    toggle.setAttribute('aria-expanded', 'false');
+    menu.classList.remove('show');
+    const languageDropdown = document.getElementById('langDropdown');
+    if (languageDropdown) languageDropdown.classList.remove('show');
+    const languageTrigger = document.getElementById('langTrigger');
+    if (languageTrigger) languageTrigger.setAttribute('aria-expanded', 'false');
+    updateMobileMenuLabel(document.documentElement.lang);
+
+    if (returnFocus) toggle.focus();
+}
+
+function initMobileMenu() {
+    const toggle = document.getElementById('menuToggle');
+    const menu = document.getElementById('navLinks');
+    if (!toggle || !menu) return;
+
+    toggle.addEventListener('click', () => {
+        const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+        if (isOpen) {
+            closeMobileMenu();
+            return;
+        }
+
+        toggle.setAttribute('aria-expanded', 'true');
+        menu.classList.add('show');
+        updateMobileMenuLabel(document.documentElement.lang);
+    });
+
+    menu.querySelectorAll('a, .theme-toggle, .lang-option').forEach(item => {
+        item.addEventListener('click', () => closeMobileMenu());
+    });
+
+    document.addEventListener('click', event => {
+        if (!event.target.closest('.navbar')) closeMobileMenu();
+    });
+
+    document.addEventListener('keydown', event => {
+        if (event.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+            closeMobileMenu(true);
+        }
+    });
+}
+
+function updateThemeToggleLabel(lang) {
+    const toggle = document.getElementById('themeToggle');
+    if (!toggle) return;
+
+    const label = translations[lang][
+        document.documentElement.dataset.theme === 'dark'
+            ? 'theme_to_light'
+            : 'theme_to_dark'
+    ];
+    toggle.setAttribute('aria-label', label);
+    toggle.setAttribute('title', label);
+}
+
+function setTheme(theme) {
+    document.documentElement.dataset.theme = theme;
+    localStorage.setItem('theme', theme);
+
+    const toggle = document.getElementById('themeToggle');
+    if (toggle) {
+        toggle.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
+    }
+
+    updateThemeToggleLabel(document.documentElement.lang);
+}
+
+function initThemeToggle() {
+    const toggle = document.getElementById('themeToggle');
+    if (!toggle) return;
+
+    const theme = document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
+    toggle.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
+    updateThemeToggleLabel(document.documentElement.lang);
+    toggle.addEventListener('click', () => {
+        setTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');
+    });
 }
 
 function updateCookieBannerSpace() {
@@ -477,4 +598,6 @@ if (cookieBanner) {
 
 initLanguageSelector();
 initLanguage();
+initThemeToggle();
+initMobileMenu();
 window.addEventListener('resize', updateCookieBannerSpace);
