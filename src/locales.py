@@ -1,6 +1,6 @@
 TRANSLATIONS = {
     "en": {
-        "initial_language": "Welcome! / Добро пожаловать! / Вітаємо!\n\nChoose your language / Выберите язык / Виберіть мову:",
+        "initial_language": "Choose your language:\nВыберите язык:\nВиберіть мову:",
         "start_welcome": "Welcome!\n\nFirst, please review the documents:",
         "agree_button": "🙂‍↕️ I agree!",
         "main_menu": "Hello, {username}!\n\nLet's start chatting!",
@@ -35,7 +35,7 @@ TRANSLATIONS = {
         "lang_en": "🇺🇸 English",
     },
     "ru": {
-        "initial_language": "Welcome! / Добро пожаловать! / Вітаємо!\n\nChoose your language / Выберите язык / Виберіть мову:",
+        "initial_language": "Choose your language:\nВыберите язык:\nВиберіть мову:",
         "start_welcome": "Приветствую!\n\nСначала ознакомьтесь с документами:",
         "agree_button": "🙂‍↕️ Принимаю",
         "main_menu": "Здравствуйте, {username}!\n\nДавайте начнём общаться!",
@@ -70,7 +70,7 @@ TRANSLATIONS = {
         "lang_en": "🇺🇸 Английский язык",
     },
     "ua": {
-        "initial_language": "Welcome! / Добро пожаловать! / Вітаємо!\n\nChoose your language / Выберите язык / Виберіть мову:",
+        "initial_language": "Choose your language:\nВыберите язык:\nВиберіть мову:",
         "start_welcome": "Вітаю!\n\nСпочатку ознайомтеся з документами:",
         "agree_button": "🙂‍↕️ Погоджуюся!",
         "main_menu": "Вітаю, {username}!\n\nПочнімо спілкуватися!",

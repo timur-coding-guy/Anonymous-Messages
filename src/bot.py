@@ -14,9 +14,9 @@ def build_language_keyboard(target_user_id: int = None):
     callback_prefix = f"onboard_link_{target_user_id}" if target_user_id is not None else "onboard"
     return InlineKeyboardMarkup([
         [
-            InlineKeyboardButton(get_text("lang_ua", "en"), callback_data=f"{callback_prefix}_ua"),
-            InlineKeyboardButton(get_text("lang_ru", "en"), callback_data=f"{callback_prefix}_ru"),
-            InlineKeyboardButton(get_text("lang_en", "en"), callback_data=f"{callback_prefix}_en"),
+            InlineKeyboardButton("🇺🇦 Українська", callback_data=f"{callback_prefix}_ua"),
+            InlineKeyboardButton("🇷🇺 Русский", callback_data=f"{callback_prefix}_ru"),
+            InlineKeyboardButton("🇬🇧 English", callback_data=f"{callback_prefix}_en"),
         ]
     ])
 
@@ -43,18 +43,16 @@ async def show_document_consent(query, language: str, target_user_id: int = None
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.effective_user.id
-    username = update.effective_user.first_name or "User"
-    
-    try:
-        user_exists = db.user_exists(user_id)
-    except:
-        user_exists = False
+    user_language = db.get_user(user_id)
     
     if context.args:
         try:
             target_user_id = int(context.args[0])
-            
-            if not user_exists:
+        except (ValueError, IndexError):
+            target_user_id = None
+
+        if target_user_id is not None:
+            if user_language is None:
                 language = "en"
                 await update.message.reply_text(
                     get_text("initial_language", language),
@@ -62,18 +60,13 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 )
                 return
             
-            language = db.get_user_language(user_id)
+            language = user_language
             
             if target_user_id == user_id:
                 await update.message.reply_text(get_text("cant_send_to_self", language))
                 return
             
-            try:
-                target_exists = db.user_exists(target_user_id)
-            except:
-                target_exists = False
-            
-            if not target_exists:
+            if db.get_user(target_user_id) is None:
                 await update.message.reply_text(get_text("user_not_found", language))
                 return
             
@@ -89,18 +82,15 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 reply_markup=reply_markup
             )
             return
-        except (ValueError, IndexError):
-            pass
     
-    if not user_exists:
+    if user_language is None:
         language = "en"
         await update.message.reply_text(
             get_text("initial_language", language),
             reply_markup=build_language_keyboard()
         )
     else:
-        language = db.get_user_language(user_id)
-        await show_main_menu(update, context, language, False)
+        await show_main_menu(update, context, user_language, False)
 
 async def show_main_menu(update: Update, context: ContextTypes.DEFAULT_TYPE, language: str, new_message: bool = False):
     user_id = update.effective_user.id
@@ -197,19 +187,19 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     await query.answer()
     user_id = update.effective_user.id
-    language = db.get_user_language(user_id)
-    
     data = query.data
     
     if data.startswith("onboard_link_"):
         _, _, target_user_id, selected_lang = data.split("_")
         await show_document_consent(query, selected_lang, int(target_user_id))
-    
-    elif data.startswith("onboard_"):
+        return
+
+    if data.startswith("onboard_"):
         selected_lang = data.rsplit("_", 1)[1]
         await show_document_consent(query, selected_lang)
-    
-    elif data.startswith("accept_link_"):
+        return
+
+    if data.startswith("accept_link_"):
         _, _, target_user_id, selected_lang = data.split("_")
         target_user_id = int(target_user_id)
 
@@ -221,7 +211,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             )
             return
 
-        if not db.user_exists(target_user_id):
+        if db.get_user(target_user_id) is None:
             await query.delete_message()
             await context.bot.send_message(
                 chat_id=update.effective_chat.id,
@@ -238,14 +228,18 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             text=get_text("send_message", selected_lang),
             reply_markup=InlineKeyboardMarkup(keyboard)
         )
+        return
 
-    elif data.startswith("accept_docs_"):
+    if data.startswith("accept_docs_"):
         selected_lang = data.split("_")[2]
         db.register_user(user_id, selected_lang)
         await query.delete_message()
         await show_main_menu(update, context, selected_lang, new_message=True)
+        return
+
+    language = db.get_user_language(user_id)
     
-    elif data == "get_link":
+    if data == "get_link":
         link = f"https://t.me/{BOT_USERNAME}?start={user_id}"
         keyboard = [
             [
