@@ -3,154 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anonymous Messages Bot</title>
+    <title>Anonymous-Messages</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: #ffffff;
-            color: #1a1a1a;
-            line-height: 1.7;
-        }
-        .navbar {
-            background: #ffffff;
-            border-bottom: 1px solid #e5e5e5;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        .navbar h1 {
-            font-size: 1.1rem;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            color: #1a1a1a;
-        }
-        .navbar a {
-            color: #1a1a1a;
-            text-decoration: none;
-            margin-left: 2rem;
-            font-weight: 500;
-            font-size: 0.9rem;
-            transition: color 0.2s;
-        }
-        .navbar a:hover {
-            color: #2563eb;
-        }
-        .hero {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 6rem 2rem 4rem;
-        }
-        .hero h1 {
-            font-size: 3.5rem;
-            line-height: 1.1;
-            letter-spacing: -0.03em;
-            margin-bottom: 1.5rem;
-            color: #1a1a1a;
-        }
-        .hero p {
-            font-size: 1.25rem;
-            color: #666;
-            margin-bottom: 2.5rem;
-            max-width: 600px;
-        }
-        .cta-button {
-            background: #1a1a1a;
-            color: #ffffff;
-            padding: 1rem 2rem;
-            border-radius: 4px;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 1rem;
-            transition: background 0.2s;
-            display: inline-block;
-        }
-        .cta-button:hover {
-            background: #333;
-        }
-        .features {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 4rem 2rem 6rem;
-        }
-        .feature-item {
-            display: flex;
-            gap: 1.5rem;
-            padding: 2rem 0;
-            border-bottom: 1px solid #e5e5e5;
-        }
-        .feature-item:last-child {
-            border-bottom: none;
-        }
-        .feature-icon {
-            width: 40px;
-            height: 40px;
-            flex-shrink: 0;
-            color: #2563eb;
-        }
-        .feature-content h3 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            letter-spacing: -0.01em;
-        }
-        .feature-content p {
-            color: #666;
-            font-size: 1rem;
-        }
-        .footer {
-            border-top: 1px solid #e5e5e5;
-            padding: 2rem;
-            text-align: center;
-            color: #666;
-            font-size: 0.9rem;
-        }
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            .hero p {
-                font-size: 1.1rem;
-            }
-            .navbar {
-                flex-direction: column;
-                gap: 1rem;
-                padding: 1rem;
-            }
-            .navbar a {
-                margin: 0 1rem;
-            }
-            .feature-item {
-                flex-direction: column;
-                gap: 1rem;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <nav class="navbar">
-        <h1>Anonymous Messages</h1>
-        <div>
-            <a href="privacy.html">Privacy Policy</a>
-            <a href="terms.html">Terms of Service</a>
+        <h1>Anonymous-Messages</h1>
+        <div class="nav-links">
+            <a href="privacy.html" data-i18n="nav_privacy">Privacy Policy</a>
+            <a href="terms.html" data-i18n="nav_terms">Terms of Service</a>
+            <a href="cookie.html" data-i18n="nav_cookies">Cookie Policy</a>
+            <div class="language-selector">
+                <button class="lang-trigger" id="langTrigger" aria-haspopup="listbox" aria-expanded="false">
+                    <span id="currentLangFlag">🇬🇧</span>
+                    <span id="currentLangCode">EN</span>
+                    <span class="lang-chevron">▼</span>
+                </button>
+                <div class="lang-dropdown" id="langDropdown">
+                    <button class="lang-option active" data-lang="en">
+                        <span>🇬🇧</span> EN
+                    </button>
+                    <button class="lang-option" data-lang="ru">
+                        <span>🇷🇺</span> RU
+                    </button>
+                    <button class="lang-option" data-lang="ua">
+                        <span>🇺🇦</span> UA
+                    </button>
+                </div>
+            </div>
         </div>
     </nav>
 
     <div class="hero">
-        <h1>Send messages without revealing your identity</h1>
-        <p>A Telegram bot that lets you send anonymous messages through links. No message content is ever stored.</p>
-        <p style="margin-top: 2rem; color: #666; font-size: 0.95rem;">To use this bot, you need to host it yourself with your own Telegram bot token and database.</p>
+        <h1 data-i18n="hero_title">Send messages without revealing your identity</h1>
+        <p data-i18n="hero_desc">A Telegram bot that lets you send anonymous messages through secure, encrypted links. No message content is ever stored.</p>
+        <p class="hero-note" data-i18n="hero_note">To use this bot, you need to host it yourself with your own Telegram bot token and database.</p>
     </div>
 
     <div class="features">
@@ -160,8 +50,8 @@
                 <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
             </svg>
             <div class="feature-content">
-                <h3>Encrypted user IDs</h3>
-                <p>Your Telegram ID is hashed with SHA-256 and salt before storage. It cannot be reversed to identify you.</p>
+                <h3 data-i18n="feature1_title">Encrypted user IDs</h3>
+                <p data-i18n="feature1_desc">Your Telegram ID is hashed with SHA-256 and salt before storage. It cannot be reversed to identify you.</p>
             </div>
         </div>
         <div class="feature-item">
@@ -169,8 +59,8 @@
                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
             </svg>
             <div class="feature-content">
-                <h3>No message storage</h3>
-                <p>Messages pass through Telegram's servers directly. Your database never stores message content or metadata.</p>
+                <h3 data-i18n="feature2_title">No message storage</h3>
+                <p data-i18n="feature2_desc">Messages pass through Telegram's servers directly. Your database never stores message content or metadata.</p>
             </div>
         </div>
         <div class="feature-item">
@@ -180,14 +70,27 @@
                 <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
             </svg>
             <div class="feature-content">
-                <h3>Multi-language support</h3>
-                <p>Available in English, Russian, and Ukrainian.</p>
+                <h3 data-i18n="feature3_title">Multi-language support</h3>
+                <p data-i18n="feature3_desc">Available in English, Russian, and Ukrainian. Recipients see messages in their chosen language.</p>
             </div>
         </div>
     </div>
 
     <footer class="footer">
-        <p>&copy; 2026 Anonymous Messages Bot</p>
+        <p>&copy; 2026 Anonymous-Messages | <a href="privacy.html" data-i18n="footer_privacy">Privacy</a> <a href="terms.html" data-i18n="footer_terms">Terms</a> <a href="cookie.html" data-i18n="footer_cookies">Cookies</a></p>
     </footer>
+
+    <div class="cookie-banner" id="cookieBanner">
+        <div class="cookie-text">
+            <span data-i18n="cookie_text">We use cookies to save your language preference. By continuing, you agree to our use of cookies. </span>
+            <a href="cookie.html" data-i18n="cookie_learn">Learn more</a>
+        </div>
+        <div class="cookie-buttons">
+            <button class="cookie-btn cookie-reject" id="rejectCookies" data-i18n="cookie_reject">Reject</button>
+            <button class="cookie-btn cookie-accept" id="acceptCookies" data-i18n="cookie_accept">Accept</button>
+        </div>
+    </div>
+
+    <script src="translations.js"></script>
 </body>
 </html>
