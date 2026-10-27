@@ -1,4 +1,4 @@
-# Anonymous Messages Bot
+# Anonymous-Messages
 
 A self-hosted Telegram bot for sending messages to other users through personal links. The bot interface is available in English, Russian, and Ukrainian. Created with AI.
 
