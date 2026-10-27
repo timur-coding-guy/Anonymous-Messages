@@ -1,141 +1,100 @@
-# Anonymous Messages Telegram Bot
+# Anonymous Messages Bot
 
-Telegram bot for sending anonymous messages between users. Features multi-language support (English, Russian, Ukrainian), encrypted user data storage via Turso, and message forwarding without logging content. Created with AI.
+A self-hosted Telegram bot for sending messages to other users through personal links. The bot interface is available in English, Russian, and Ukrainian. Created with AI.
 
 ## Features
 
-- Anonymous messaging via unique shareable links
-- Multi-language interface (English, Russian, Ukrainian)
-- Encrypted user data storage (SHA-256 hashed IDs)
-- Support for text, photos, voice messages, and GIFs
-- No message logging or content storage
-- GitHub Pages for Terms of Service and Privacy Policy
+- Personal links for receiving anonymous messages
+- Text, photos, voice messages, and GIFs
+- User IDs stored as salted SHA-256 hashes, with language preferences in Turso
+- Message content is forwarded through Telegram and is not stored in the bot's database
+- Localized terms, privacy, and cookie pages in [`docs/`](./docs/)
 
-## Prerequisites
+## Requirements
 
-- Python 3.10 or higher
-- uv package manager
-- Telegram Bot Token from [@BotFather](https://t.me/botfather)
-- Turso database URL and auth token
+- Python 3.10 or later
+- [uv](https://docs.astral.sh/uv/getting-started/installation/)
+- A Telegram bot token from [@BotFather](https://t.me/BotFather)
+- A [Turso](https://turso.tech/) database and authentication token
 
-## Installation
+## Setup
 
-### macOS/Linux
+Clone the repository and install its dependencies:
 
 ```bash
-# Install uv if not already installed
-curl -LsSf https://astral.sh/uv/install.sh | sh
-
-# Clone the repository
-git clone https://github.com/timur-coding-guy/Anonymous-Messages/
+git clone https://github.com/timur-coding-guy/Anonymous-Messages.git
 cd Anonymous-Messages
-# Install dependencies
 uv sync
+```
 
-# Copy environment file and configure
+Create a `.env` file from the example:
+
+```bash
+# macOS/Linux
 cp .env.example .env
-# Edit .env with your TELEGRAM_BOT_TOKEN, TURSO_DATABASE_URL, TURSO_AUTH_TOKEN, GITHUB_PAGES_URL, and HASH_SALT
+
+# Windows PowerShell
+Copy-Item .env.example .env
 ```
 
-### Windows (PowerShell)
+Set the following values in `.env`:
 
-```powershell
-# Install uv if not already installed
-powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
-
-# Clone the repository
-git clone https://github.com/timur-coding-guy/Anonymous-Messages/
-cd Anonymous-Messages
-
-# Install dependencies
-uv sync
-
-# Copy environment file and configure
-copy .env.example .env
-# Edit .env with your TELEGRAM_BOT_TOKEN, TURSO_DATABASE_URL, TURSO_AUTH_TOKEN, GITHUB_PAGES_URL, and HASH_SALT
+```dotenv
+TELEGRAM_BOT_TOKEN=your_telegram_bot_token
+TURSO_DATABASE_URL=libsql://your-database-name.turso.io
+TURSO_AUTH_TOKEN=your_turso_auth_token
+HASH_SALT=your_long_random_secret
+GITHUB_PAGES_URL=https://yourusername.github.io/your-repository
 ```
 
-## Configuration
+`TELEGRAM_BOT_TOKEN`, `TURSO_DATABASE_URL`, and `TURSO_AUTH_TOKEN` are required to run the bot. Keep `HASH_SALT` private and unchanged after users have been added: changing it makes existing database records inaccessible. `GITHUB_PAGES_URL` should point to the deployed `docs/` site so the bot can link to its legal pages.
 
-Create a `.env` file in the project root:
-
-```
-TELEGRAM_BOT_TOKEN=your_bot_token
-TURSO_DATABASE_URL=libsql://your-database.turso.io
-TURSO_AUTH_TOKEN=your_auth_token
-GITHUB_PAGES_URL=https://yourusername.github.io/your-repo-name
-HASH_SALT=your_random_secret_salt_here
-```
-
-### Setting up Turso
+Create a Turso database and get its URL and token using the [Turso CLI](https://docs.turso.tech/cli/introduction):
 
 ```bash
-# Install Turso CLI
-curl -sSfL https://get.tur.so/install.sh | bash
-
-# Create database
-turso db create your-name-of-database-you-want
-
-# Get database URL
-turso db show your-name-of-database --http-url
-
-# Create auth token
-turso db tokens create your-name-of-database
+turso db create your-database-name
+turso db show your-database-name --http-url
+turso db tokens create your-database-name
 ```
 
-## Running the Bot
+The bot creates its `users` table on startup.
 
-### Local Development
+## Run
+
+Start the bot locally:
 
 ```bash
-# Run the bot
 uv run python -m src.main
 ```
 
-### Docker
+Or, after creating and configuring `.env`, build and start it with Docker Compose from the repository root:
 
 ```bash
-# Build and run with Docker Compose
-cd docker
-docker compose up -d --build
+docker compose -f docker/docker-compose.yml up -d --build
 ```
 
-## GitHub Pages Setup
+View container logs with `docker compose -f docker/docker-compose.yml logs -f`; stop the service with `docker compose -f docker/docker-compose.yml down`.
 
-1. Create a GitHub repository
-2. Enable GitHub Pages in repository settings (use docs/ folder)
-3. Upload the `docs/` folder contents
-4. Add your GitHub Pages URL to `.env`:
-   ```
-   GITHUB_PAGES_URL=https://yourusername.github.io/repository-name
-   ```
+## Publish the policy pages
 
-## Project Structure
+The bot links to the privacy policy and terms on your GitHub Pages site. In the repository settings, enable GitHub Pages and select the `main` branch and `/docs` folder as the publishing source. Set `GITHUB_PAGES_URL` in `.env` to the resulting site URL.
 
-```
-anon-messages/
-├── src/
-│   ├── __init__.py
-│   ├── main.py          # Entry point
-│   ├── bot.py           # Telegram bot logic
-│   ├── database.py      # Turso database operations
-│   └── locales.py       # Translations
-├── tests/
-│   └── __init__.py
-├── docs/
-│   ├── index.html
-│   ├── terms.html       # Terms of Service
-│   └── privacy.html     # Privacy Policy
+## Project structure
+
+```text
+.
+├── .dockerignore
+├── .env.example
 ├── docker/
 │   ├── Dockerfile
-│   ├── docker-compose.yml
-├── .env.example
-├── .gitignore
-├── .dockerignore
+│   └── docker-compose.yml
+├── docs/                 # GitHub Pages site and policies
+├── src/
+│   ├── bot.py
+│   ├── database.py
+│   ├── locales.py
+│   └── main.py
+├── tests/
 ├── pyproject.toml
-├── .python-version
-├── LICENSE
-├── uv.lock
-└── README.md
-
+└── uv.lock
 ```
