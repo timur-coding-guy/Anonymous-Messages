@@ -44,8 +44,9 @@
         <h2 data-i18n="privacy_h1">1. Information We Collect</h2>
         <p data-i18n="privacy_p1">We collect minimal information necessary to operate the service:</p>
         <ul>
-            <li data-i18n="privacy_li1"><strong>Encrypted User ID:</strong> Your Telegram user ID is encrypted using SHA-256 hashing with additional salt before storage</li>
+            <li data-i18n="privacy_li1"><strong>Hashed user ID:</strong> Your Telegram user ID is hashed using SHA-256 with an additional salt before storage</li>
             <li data-i18n="privacy_li2"><strong>Language Preference:</strong> Your selected language (two-letter code: en, ru, ua)</li>
+            <li data-i18n="privacy_li16">Browser Preferences: The website stores your selected language and storage choice in your browser after you accept</li>
         </ul>
 
         <h2 data-i18n="privacy_h2">2. Information We Do NOT Collect</h2>
@@ -56,22 +57,22 @@
                 <li data-i18n="privacy_li4">Message metadata</li>
                 <li data-i18n="privacy_li5">Usernames or real names</li>
                 <li data-i18n="privacy_li6">IP addresses</li>
-                <li data-i18n="privacy_li7">Any identifying information beyond encrypted user IDs</li>
+                <li data-i18n="privacy_li7">Any identifying information beyond hashed user IDs</li>
             </ul>
         </div>
 
         <h2 data-i18n="privacy_h3">3. Data Storage and Security</h2>
-        <p data-i18n="privacy_p3">All stored data is encrypted:</p>
+        <p data-i18n="privacy_p3">We protect stored data as follows:</p>
         <ul>
             <li data-i18n="privacy_li8">User IDs are hashed using SHA-256 with salt before storage</li>
-            <li data-i18n="privacy_li9">Data is stored in Turso database with encryption at rest</li>
+            <li data-i18n="privacy_li9">Data is stored in a Turso database</li>
             <li data-i18n="privacy_li10">No message content is ever stored in our database</li>
         </ul>
 
         <h2 data-i18n="privacy_h4">4. Data Retention</h2>
         <p data-i18n="privacy_p4">We retain only the minimum data necessary for service operation:</p>
         <ul>
-            <li data-i18n="privacy_li11">Encrypted user IDs and language preferences are retained indefinitely unless you request deletion</li>
+            <li data-i18n="privacy_li11">Hashed user IDs and language preferences are retained until you request deletion</li>
             <li data-i18n="privacy_li12">No message content is retained</li>
         </ul>
 
@@ -93,7 +94,18 @@
         <p data-i18n="privacy_p8">Your data may be stored and processed in servers located outside your country. By using the service, you consent to such transfers.</p>
 
         <h2 data-i18n="privacy_h9">9. Changes to Privacy Policy</h2>
-        <p data-i18n="privacy_p9">We may update this privacy policy from time to time. We will notify users of significant changes through the bot.</p>
+        <p data-i18n="privacy_p9">We may update this privacy policy from time to time. The latest version will be available on this page.</p>
+    </div>
+
+    <div class="cookie-banner" id="cookieBanner">
+        <div class="cookie-text">
+            <span data-i18n="cookie_text">This site selects a language from your browser settings without accessing your location. Choose Accept to save your language between visits, or Reject to select it from your browser settings next time. </span>
+            <a href="cookie.html" data-i18n="cookie_learn">Learn more</a>
+        </div>
+        <div class="cookie-buttons">
+            <button class="cookie-btn cookie-reject" id="rejectCookies" data-i18n="cookie_reject">Reject</button>
+            <button class="cookie-btn cookie-accept" id="acceptCookies" data-i18n="cookie_accept">Accept</button>
+        </div>
     </div>
 
     <script src="translations.js"></script>

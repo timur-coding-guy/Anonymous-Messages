@@ -10,6 +10,37 @@ BOT_USERNAME = None
 SELECTING_LANGUAGE = 1
 SENDING_MESSAGE = 2
 
+def build_language_keyboard(target_user_id: int = None):
+    callback_prefix = f"onboard_link_{target_user_id}" if target_user_id is not None else "onboard"
+    return InlineKeyboardMarkup([
+        [
+            InlineKeyboardButton(get_text("lang_ua", "en"), callback_data=f"{callback_prefix}_ua"),
+            InlineKeyboardButton(get_text("lang_ru", "en"), callback_data=f"{callback_prefix}_ru"),
+            InlineKeyboardButton(get_text("lang_en", "en"), callback_data=f"{callback_prefix}_en"),
+        ]
+    ])
+
+async def show_document_consent(query, language: str, target_user_id: int = None):
+    github_pages_url = os.getenv("GITHUB_PAGES_URL", "https://yourusername.github.io/anon-messages")
+    accept_callback = (
+        f"accept_link_{target_user_id}_{language}"
+        if target_user_id is not None
+        else f"accept_docs_{language}"
+    )
+    keyboard = [
+        [
+            InlineKeyboardButton(get_text("privacy", language), url=f"{github_pages_url}/privacy.html"),
+            InlineKeyboardButton(get_text("terms", language), url=f"{github_pages_url}/terms.html"),
+        ],
+        [
+            InlineKeyboardButton(get_text("agree_button", language), callback_data=accept_callback),
+        ]
+    ]
+    await query.edit_message_text(
+        get_text("start_welcome", language),
+        reply_markup=InlineKeyboardMarkup(keyboard)
+    )
+
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.effective_user.id
     username = update.effective_user.first_name or "User"
@@ -25,20 +56,9 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
             
             if not user_exists:
                 language = "en"
-                github_pages_url = os.getenv("GITHUB_PAGES_URL", "https://yourusername.github.io/anon-messages")
-                keyboard = [
-                    [
-                        InlineKeyboardButton(get_text("privacy", language), url=f"{github_pages_url}/privacy.html"),
-                        InlineKeyboardButton(get_text("terms", language), url=f"{github_pages_url}/terms.html"),
-                    ],
-                    [
-                        InlineKeyboardButton(get_text("agree_button", language), callback_data=f"agree_link_{target_user_id}"),
-                    ]
-                ]
-                reply_markup = InlineKeyboardMarkup(keyboard)
                 await update.message.reply_text(
-                    get_text("start_welcome", language),
-                    reply_markup=reply_markup
+                    get_text("initial_language", language),
+                    reply_markup=build_language_keyboard(target_user_id)
                 )
                 return
             
@@ -74,20 +94,9 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     if not user_exists:
         language = "en"
-        github_pages_url = os.getenv("GITHUB_PAGES_URL", "https://yourusername.github.io/anon-messages")
-        keyboard = [
-            [
-                InlineKeyboardButton(get_text("privacy", language), url=f"{github_pages_url}/privacy.html"),
-                InlineKeyboardButton(get_text("terms", language), url=f"{github_pages_url}/terms.html"),
-            ],
-            [
-                InlineKeyboardButton(get_text("agree_button", language), callback_data="agree_docs"),
-            ]
-        ]
-        reply_markup = InlineKeyboardMarkup(keyboard)
         await update.message.reply_text(
-            get_text("start_welcome", language),
-            reply_markup=reply_markup
+            get_text("initial_language", language),
+            reply_markup=build_language_keyboard()
         )
     else:
         language = db.get_user_language(user_id)
@@ -138,6 +147,9 @@ async def show_settings(update: Update, context: ContextTypes.DEFAULT_TYPE, lang
             InlineKeyboardButton(get_text("change_language_button", language), callback_data="change_language"),
         ],
         [
+            InlineKeyboardButton(get_text("legal_button", language), callback_data="legal"),
+        ],
+        [
             InlineKeyboardButton(get_text("delete_account_button", language), callback_data="delete_account"),
         ],
         [
@@ -145,7 +157,7 @@ async def show_settings(update: Update, context: ContextTypes.DEFAULT_TYPE, lang
         ],
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
-    
+
     if update.callback_query:
         await update.callback_query.edit_message_text(
             get_text("settings", language),
@@ -157,6 +169,30 @@ async def show_settings(update: Update, context: ContextTypes.DEFAULT_TYPE, lang
             reply_markup=reply_markup
         )
 
+async def show_legal(update: Update, context: ContextTypes.DEFAULT_TYPE, language: str):
+    github_pages_url = os.getenv("GITHUB_PAGES_URL", "https://yourusername.github.io/anon-messages")
+    keyboard = [
+        [
+            InlineKeyboardButton(get_text("privacy", language), url=f"{github_pages_url}/privacy.html"),
+            InlineKeyboardButton(get_text("terms", language), url=f"{github_pages_url}/terms.html"),
+        ],
+        [
+            InlineKeyboardButton(get_text("back", language), callback_data="back_settings"),
+        ],
+    ]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+
+    if update.callback_query:
+        await update.callback_query.edit_message_text(
+            get_text("documents", language),
+            reply_markup=reply_markup
+        )
+    else:
+        await update.message.reply_text(
+            get_text("documents", language),
+            reply_markup=reply_markup
+        )
+
 async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     await query.answer()
@@ -165,69 +201,49 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     data = query.data
     
-    if data == "agree_docs":
-        keyboard = [
-            [
-                InlineKeyboardButton(get_text("lang_ua", language), callback_data="lang_ua"),
-                InlineKeyboardButton(get_text("lang_ru", language), callback_data="lang_ru"),
-                InlineKeyboardButton(get_text("lang_en", language), callback_data="lang_en"),
-            ]
-        ]
-        reply_markup = InlineKeyboardMarkup(keyboard)
-        await query.edit_message_text(
-            get_text("select_language", language),
-            reply_markup=reply_markup
-        )
+    if data.startswith("onboard_link_"):
+        _, _, target_user_id, selected_lang = data.split("_")
+        await show_document_consent(query, selected_lang, int(target_user_id))
     
-    elif data.startswith("agree_link_"):
-        target_user_id = int(data.split("_")[2])
-        keyboard = [
-            [
-                InlineKeyboardButton(get_text("lang_ua", language), callback_data=f"register_{target_user_id}_ua"),
-                InlineKeyboardButton(get_text("lang_ru", language), callback_data=f"register_{target_user_id}_ru"),
-                InlineKeyboardButton(get_text("lang_en", language), callback_data=f"register_{target_user_id}_en"),
-            ]
-        ]
-        reply_markup = InlineKeyboardMarkup(keyboard)
-        await query.edit_message_text(
-            get_text("select_language", language),
-            reply_markup=reply_markup
-        )
+    elif data.startswith("onboard_"):
+        selected_lang = data.rsplit("_", 1)[1]
+        await show_document_consent(query, selected_lang)
     
-    elif data.startswith("register_"):
-        parts = data.split("_")
-        target_user_id = int(parts[1])
-        selected_lang = parts[2]
-        db.register_user(user_id, selected_lang)
-        language = selected_lang
-        await query.delete_message()
-        
+    elif data.startswith("accept_link_"):
+        _, _, target_user_id, selected_lang = data.split("_")
+        target_user_id = int(target_user_id)
+
         if target_user_id == user_id:
-            await update.message.reply_text(get_text("cant_send_to_self", language))
+            await query.delete_message()
+            await context.bot.send_message(
+                chat_id=update.effective_chat.id,
+                text=get_text("cant_send_to_self", selected_lang)
+            )
             return
-        
+
         if not db.user_exists(target_user_id):
-            await update.message.reply_text(get_text("user_not_found", language))
+            await query.delete_message()
+            await context.bot.send_message(
+                chat_id=update.effective_chat.id,
+                text=get_text("user_not_found", selected_lang)
+            )
             return
-        
-        context.user_data["target_user_id"] = target_user_id
-        keyboard = [
-            [
-                InlineKeyboardButton(get_text("im_done", language), callback_data="im_done"),
-            ]
-        ]
-        reply_markup = InlineKeyboardMarkup(keyboard)
-        await update.message.reply_text(
-            get_text("send_message", language),
-            reply_markup=reply_markup
-        )
-    
-    elif data.startswith("lang_"):
-        selected_lang = data.split("_")[1]
+
         db.register_user(user_id, selected_lang)
-        language = selected_lang
+        context.user_data["target_user_id"] = target_user_id
         await query.delete_message()
-        await show_main_menu(update, context, language, new_message=True)
+        keyboard = [[InlineKeyboardButton(get_text("im_done", selected_lang), callback_data="im_done")]]
+        await context.bot.send_message(
+            chat_id=update.effective_chat.id,
+            text=get_text("send_message", selected_lang),
+            reply_markup=InlineKeyboardMarkup(keyboard)
+        )
+
+    elif data.startswith("accept_docs_"):
+        selected_lang = data.split("_")[2]
+        db.register_user(user_id, selected_lang)
+        await query.delete_message()
+        await show_main_menu(update, context, selected_lang, new_message=True)
     
     elif data == "get_link":
         link = f"https://t.me/{BOT_USERNAME}?start={user_id}"
@@ -241,10 +257,13 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             f"{get_text('your_link', language)}\n{link}",
             reply_markup=reply_markup
         )
-    
+
     elif data == "settings":
         await show_settings(update, context, language)
     
+    elif data == "legal":
+        await show_legal(update, context, language)
+
     elif data == "change_language":
         keyboard = [
             [
