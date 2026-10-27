@@ -97,7 +97,7 @@ uv run python -m src.main
 ```bash
 # Build and run with Docker Compose
 cd docker
-docker-compose up -d
+docker compose up -d --build
 ```
 
 ## GitHub Pages Setup
@@ -129,9 +129,9 @@ anon-messages/
 ├── docker/
 │   ├── Dockerfile
 │   ├── docker-compose.yml
-│   └── .dockerignore
 ├── .env.example
 ├── .gitignore
+├── .dockerignore
 ├── pyproject.toml
 ├── .python-version
 ├── LICENSE
@@ -139,4 +139,3 @@ anon-messages/
 └── README.md
 
 ```
-

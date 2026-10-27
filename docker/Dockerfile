@@ -2,10 +2,10 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-COPY pyproject.toml ./
-RUN pip install --no-cache-dir uv && uv pip install --system -r <(uv pip compile pyproject.toml)
+COPY pyproject.toml uv.lock ./
+RUN pip install --no-cache-dir uv \
+    && uv sync --frozen --no-dev --no-install-project
 
 COPY src/ ./src/
-COPY .env.example .env
 
-CMD ["python", "-m", "src.main"]
+CMD ["/app/.venv/bin/python", "-m", "src.main"]
