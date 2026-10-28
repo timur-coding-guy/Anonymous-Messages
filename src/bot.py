@@ -298,6 +298,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     elif data == "confirm_delete":
         db.delete_user(user_id)
+        context.user_data.pop("target_user_id", None)
         await query.edit_message_text(get_text("ok", language))
     
     elif data == "back_settings":
@@ -307,6 +308,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await show_main_menu(update, context, language)
     
     elif data == "im_done":
+        context.user_data.pop("target_user_id", None)
         await query.edit_message_text(get_text("ok", language))
         await show_main_menu(update, context, language)
 
@@ -343,28 +345,24 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await context.bot.send_photo(
             chat_id=target_user_id,
             photo=photo,
-            caption=f"{get_text('new_message_received', target_language)}{message_text}{get_text('swipe_to_reply', target_language)}",
-            parse_mode="Markdown"
+            caption=f"{get_text('new_message_received', target_language)}{message_text}{get_text('swipe_to_reply', target_language)}"
         )
     elif voice:
         await context.bot.send_voice(
             chat_id=target_user_id,
             voice=voice,
-            caption=f"{get_text('new_message_received', target_language)}{get_text('swipe_to_reply', target_language)}",
-            parse_mode="Markdown"
+            caption=f"{get_text('new_message_received', target_language)}{get_text('swipe_to_reply', target_language)}"
         )
     elif animation:
         await context.bot.send_animation(
             chat_id=target_user_id,
             animation=animation,
-            caption=f"{get_text('new_message_received', target_language)}{message_text}{get_text('swipe_to_reply', target_language)}",
-            parse_mode="Markdown"
+            caption=f"{get_text('new_message_received', target_language)}{message_text}{get_text('swipe_to_reply', target_language)}"
         )
     elif message_text:
         await context.bot.send_message(
             chat_id=target_user_id,
-            text=f"{get_text('new_message_received', target_language)}{message_text}{get_text('swipe_to_reply', target_language)}",
-            parse_mode="Markdown"
+            text=f"{get_text('new_message_received', target_language)}{message_text}{get_text('swipe_to_reply', target_language)}"
         )
     
     keyboard = [

@@ -171,9 +171,7 @@ class Database:
             "UPDATE users SET language = ? WHERE id = ?",
             (language, encrypted_id)
         )
-        cached_language = self._get_cached_user(user_id)
-        if cached_language is not _CACHE_MISS and cached_language is not None:
-            self._cache_user(user_id, language)
+        self._cache_user(user_id, language)
     
     def delete_user(self, user_id: int):
         encrypted_id = self._encrypt_id(user_id)

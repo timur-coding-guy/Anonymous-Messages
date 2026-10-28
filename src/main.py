@@ -1,13 +1,10 @@
 import asyncio
-import logging
 import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 
 from bot import create_application, init_bot_username
-
-logging.basicConfig(level=logging.CRITICAL)
 
 async def main():
     application = create_application()
