@@ -237,6 +237,14 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await show_main_menu(update, context, selected_lang, new_message=True)
         return
 
+    if db.get_user(user_id) is None:
+        context.user_data.pop("target_user_id", None)
+        await query.edit_message_text(
+            get_text("initial_language", "en"),
+            reply_markup=build_language_keyboard()
+        )
+        return
+
     language = db.get_user_language(user_id)
     
     if data == "get_link":
@@ -315,6 +323,15 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.effective_user.id
+
+    if db.get_user(user_id) is None:
+        context.user_data.pop("target_user_id", None)
+        await update.message.reply_text(
+            get_text("initial_language", "en"),
+            reply_markup=build_language_keyboard()
+        )
+        return
+
     sender_language = db.get_user_language(user_id)
     
     if "target_user_id" not in context.user_data:
